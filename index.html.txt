@@ -1,0 +1,229 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DXNkahlawi | متجر المنتجات</title>
+<style>
+:root{--green:#103c2b;--gold:#d5b15c;--cream:#f7f5ef}
+*{box-sizing:border-box}
+body{margin:0;font-family:Tahoma,Arial,sans-serif;background:var(--cream);color:#222}
+header{background:var(--green);color:white;padding:24px 5%;text-align:center;border-bottom:4px solid var(--gold)}
+.logo{font-size:32px;font-weight:bold;color:var(--gold)}
+header p{margin:8px 0 0}
+nav{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin-top:18px}
+nav a{color:white;text-decoration:none}
+.hero{padding:45px 20px;text-align:center;background:linear-gradient(135deg,#174a34,#09281d);color:white}
+.hero h1{color:var(--gold);font-size:clamp(25px,4vw,40px)}
+.hero p{line-height:1.9}
+button,.btn{border:0;border-radius:8px;padding:11px 16px;cursor:pointer;font-weight:bold}
+.gold{background:var(--gold);color:#183324}
+.green{background:var(--green);color:white}
+main{max-width:1100px;margin:28px auto;padding:0 16px}
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+input,select{padding:12px;border:1px solid #ccc;border-radius:8px;font:inherit;min-width:0}
+.tools input{flex:1;min-width:180px}
+h2{color:var(--green)}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px}
+.card{background:white;border-radius:14px;overflow:hidden;box-shadow:0 3px 14px #00000010;border:1px solid #e6e1d4}
+.product-img{height:155px;background:#e9efe9;display:flex;align-items:center;justify-content:center;font-size:64px}
+.card-content{padding:16px}
+.card h3{margin:4px 0 8px;color:var(--green)}
+.card p{line-height:1.6;color:#555;font-size:14px}
+.price{font-weight:bold;color:#9b7625;font-size:20px;margin:12px 0}
+.card button{width:100%}
+.cart{background:white;padding:20px;border-radius:14px;margin-top:30px;border:1px solid #e5dfd0}
+.cart-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 0;border-bottom:1px solid #eee;flex-wrap:wrap}
+.qty{display:flex;align-items:center;gap:8px}
+.qty button{padding:5px 10px}
+.total{font-size:22px;font-weight:bold;color:var(--green);margin:20px 0}
+.order-form{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.order-form input{width:100%}
+.order-form button{grid-column:1/-1}
+.notice{font-size:13px;color:#666;line-height:1.7}
+footer{margin-top:40px;padding:25px;text-align:center;background:var(--green);color:white;line-height:2}
+footer a{color:var(--gold)}
+@media(max-width:550px){.order-form{grid-template-columns:1fr}.order-form button{grid-column:auto}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">DXNkahlawi</div>
+  <p>اختيارات مميزة ليك 🌿</p>
+  <nav>
+    <a href="#products">المنتجات</a>
+    <a href="#cart">سلة المشتريات</a>
+    <a href="#contact">اتصل بينا</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>مرحبا بيك في DXNkahlawi</h1>
+  <p>اكتشف مجموعة من منتجات القهوة والشاي والعناية الشخصية.<br>اختار منتجاتك وحضّر طلبك مباشرة عبر واتساب.</p>
+  <a class="btn gold" href="#products" style="display:inline-block;text-decoration:none">اكتشف المنتجات</a>
+</section>
+
+<main>
+  <h2 id="products">🌿 منتجاتنا</h2>
+  <div class="tools">
+    <input id="search" type="search" placeholder="فتّش على منتج..." aria-label="البحث عن منتج">
+    <select id="category" aria-label="تصفية حسب الصنف">
+      <option value="all">كل الأصناف</option>
+      <option value="coffee">القهوة</option>
+      <option value="tea">الشاي</option>
+      <option value="care">العناية الشخصية</option>
+    </select>
+  </div>
+  <div class="products" id="productsList"></div>
+
+  <section class="cart" id="cart">
+    <h2>🛒 سلة المشتريات</h2>
+    <div id="cartItems">السلة فارغة توّا.</div>
+    <div class="total" id="total">المجموع: 0 د.ت</div>
+    <h3>معلومات التوصيل</h3>
+    <div class="order-form">
+      <input id="customerName" placeholder="الاسم واللقب" autocomplete="name">
+      <input id="customerPhone" placeholder="رقم الهاتف" type="tel" autocomplete="tel">
+      <input id="customerCity" placeholder="الولاية والمدينة" autocomplete="address-level2">
+      <input id="customerAddress" placeholder="العنوان (اختياري)" autocomplete="street-address">
+      <button class="gold" onclick="sendOrder()">تأكيد الطلب عبر واتساب</button>
+    </div>
+    <p class="notice">الطلب يتبعثلك في واتساب للمراجعة والتأكيد. الموقع هذا تجريبي، والأسعار والتوصيل يلزم تثبّتهم قبل البيع.</p>
+  </section>
+</main>
+
+<footer id="contact">
+  <strong>DXNkahlawi</strong><br>
+  للاستفسار والطلبات: <a href="https://wa.me/21655286082" target="_blank" rel="noopener">واتساب 55 286 082</a><br>
+  <small>© <span id="year"></span> DXNkahlawi</small>
+</footer>
+
+<script>
+const products = [
+  {id:1,name:"قهوة لينغزي",category:"coffee",price:25,emoji:"☕",desc:"مثال تجريبي لمنتج من فئة القهوة."},
+  {id:2,name:"قهوة بلاك كوفي",category:"coffee",price:18,emoji:"☕",desc:"مثال تجريبي. بدّل الاسم والسعر حسب المنتج الحقيقي."},
+  {id:3,name:"شاي عشبي",category:"tea",price:20,emoji:"🍵",desc:"مثال تجريبي لمنتج من فئة الشاي."},
+  {id:4,name:"مشروب الكاكاو",category:"coffee",price:22,emoji:"🥤",desc:"مثال تجريبي لمشروب."},
+  {id:5,name:"منتج عناية بالبشرة",category:"care",price:30,emoji:"🧴",desc:"مثال تجريبي لمنتج العناية الشخصية."},
+  {id:6,name:"صابون للعناية",category:"care",price:12,emoji:"🧼",desc:"مثال تجريبي. تأكد من الاسم والسعر قبل النشر."}
+];
+const cart = {};
+const money = n => n.toFixed(2) + " د.ت";
+const list = document.getElementById("productsList");
+
+function renderProducts(){
+  const q = document.getElementById("search").value.trim().toLowerCase();
+  const cat = document.getElementById("category").value;
+  const filtered = products.filter(p =>
+    p.name.toLowerCase().includes(q) &&
+    (cat === "all" || p.category === cat)
+  );
+  list.innerHTML = "";
+  if(!filtered.length){
+    list.textContent = "ما لقيناش منتجات مطابقة للبحث.";
+    return;
+  }
+  filtered.forEach(p => {
+    const card = document.createElement("article");
+    card.className = "card";
+    const image = document.createElement("div");
+    image.className = "product-img";
+    image.textContent = p.emoji;
+    const content = document.createElement("div");
+    content.className = "card-content";
+    const title = document.createElement("h3");
+    title.textContent = p.name;
+    const desc = document.createElement("p");
+    desc.textContent = p.desc;
+    const price = document.createElement("div");
+    price.className = "price";
+    price.textContent = money(p.price);
+    const btn = document.createElement("button");
+    btn.className = "green";
+    btn.textContent = "أضف للسلة";
+    btn.onclick = () => { cart[p.id] = (cart[p.id] || 0) + 1; renderCart(); };
+    content.append(title,desc,price,btn);
+    card.append(image,content);
+    list.append(card);
+  });
+}
+
+function renderCart(){
+  const container = document.getElementById("cartItems");
+  container.innerHTML = "";
+  const ids = Object.keys(cart).filter(id => cart[id] > 0);
+  let total = 0;
+  if(!ids.length){
+    container.textContent = "السلة فارغة توّا.";
+  }
+  ids.forEach(id => {
+    const p = products.find(x => x.id === Number(id));
+    const qty = cart[id];
+    total += p.price * qty;
+    const row = document.createElement("div");
+    row.className = "cart-row";
+    const name = document.createElement("span");
+    name.textContent = p.name + " — " + money(p.price);
+    const controls = document.createElement("div");
+    controls.className = "qty";
+    const minus = document.createElement("button");
+    minus.textContent = "−";
+    minus.setAttribute("aria-label","نقص الكمية");
+    minus.onclick = () => { cart[id]--; renderCart(); };
+    const number = document.createElement("span");
+    number.textContent = qty;
+    const plus = document.createElement("button");
+    plus.textContent = "+";
+    plus.setAttribute("aria-label","زيد الكمية");
+    plus.onclick = () => { cart[id]++; renderCart(); };
+    const subtotal = document.createElement("strong");
+    subtotal.textContent = money(p.price * qty);
+    controls.append(minus,number,plus);
+    row.append(name,controls,subtotal);
+    container.append(row);
+  });
+  document.getElementById("total").textContent = "المجموع: " + money(total);
+}
+
+function sendOrder(){
+  const ids = Object.keys(cart).filter(id => cart[id] > 0);
+  if(!ids.length){ alert("زيد منتج واحد على الأقل للسلة."); return; }
+  const name = document.getElementById("customerName").value.trim();
+  const phone = document.getElementById("customerPhone").value.trim();
+  const city = document.getElementById("customerCity").value.trim();
+  const address = document.getElementById("customerAddress").value.trim();
+  if(!name || !phone || !city){
+    alert("عمّر الاسم ورقم الهاتف والولاية/المدينة من فضلك.");
+    return;
+  }
+  let total = 0;
+  const lines = ids.map(id => {
+    const p = products.find(x => x.id === Number(id));
+    total += p.price * cart[id];
+    return "• " + p.name + " × " + cart[id] + " = " + money(p.price * cart[id]);
+  });
+  const message = [
+    "السلام عليكم، نحب نأكد الطلب من DXNkahlawi:",
+    "",
+    ...lines,
+    "",
+    "المجموع التقريبي: " + money(total),
+    "الاسم: " + name,
+    "الهاتف: " + phone,
+    "المدينة/الولاية: " + city,
+    address ? "العنوان: " + address : "",
+    "",
+    "الرجاء تأكيد توفّر المنتجات ومصاريف التوصيل."
+  ].filter(Boolean).join("\n");
+  window.open("https://wa.me/21655286082?text=" + encodeURIComponent(message),"_blank","noopener");
+}
+
+document.getElementById("search").addEventListener("input",renderProducts);
+document.getElementById("category").addEventListener("change",renderProducts);
+document.getElementById("year").textContent = new Date().getFullYear();
+renderProducts();
+renderCart();
+</script>
+</body>
+</html>
